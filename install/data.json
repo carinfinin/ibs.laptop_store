@@ -1,0 +1,424 @@
+{
+  "brands": [
+    {
+      "name": "Toshiba",
+      "code": "toshiba",
+      "models": [
+        {
+          "name": "Dynabook Portege X30L",
+          "code": "dynabook_portege_x30l",
+          "laptops": [
+            {
+              "name": "Dynabook Portege X30L",
+              "code": "x30l_2023",
+              "options": [
+                {
+                  "name": "Год выпуска",
+                  "value": 2023
+                },
+                {
+                  "name": "Цена",
+                  "value": 1399
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Dell",
+      "code": "dell",
+      "models": [
+        {
+          "name": "XPS 13",
+          "code": "xps_13",
+          "laptops": [
+            {
+              "name": "Dell XPS 13 2023",
+              "code": "xps_13_2023",
+              "options": [
+                {
+                  "name": "Год выпуска",
+                  "value": 2023
+                },
+                {
+                  "name": "Цена",
+                  "value": 1299
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Apple",
+      "code": "apple",
+      "models": [
+        {
+          "name": "MacBook Air M2",
+          "code": "macbook_air_m2",
+          "laptops": [
+            {
+              "name": "MacBook Air M2 2022",
+              "code": "macbook_air_m2_2022",
+              "options": [
+                {
+                  "name": "Год выпуска",
+                  "value": 2022
+                },
+                {
+                  "name": "Цена",
+                  "value": 1199
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "MacBook Pro 14",
+          "code": "macbook_pro_14",
+          "laptops": [
+            {
+              "name": "MacBook Pro 14 M1 Pro",
+              "code": "macbook_pro_14_2021",
+              "options": [
+                {
+                  "name": "Год выпуска",
+                  "value": 2021
+                },
+                {
+                  "name": "Цена",
+                  "value": 1999
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "HP",
+      "code": "hp",
+      "models": [
+        {
+          "name": "Spectre x360 14",
+          "code": "spectre_x360_14",
+          "laptops": [
+            {
+              "name": "HP Spectre x360 14 2023",
+              "code": "spectre_x360_14_2023",
+              "options": [
+                {
+                  "name": "Год выпуска",
+                  "value": 2023
+                },
+                {
+                  "name": "Цена",
+                  "value": 1399
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Omen 16",
+          "code": "omen_16",
+          "laptops": [
+            {
+              "name": "HP Omen 16 2023",
+              "code": "omen_16_2023",
+              "options": [
+                {
+                  "name": "Год выпуска",
+                  "value": 2023
+                },
+                {
+                  "name": "Цена",
+                  "value": 1299
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Lenovo",
+      "code": "lenovo",
+      "models": [
+        {
+          "name": "ThinkPad X1 Carbon Gen 10",
+          "code": "thinkpad_x1_carbon_gen_10",
+          "laptops": [
+            {
+              "name": "Lenovo ThinkPad X1 Carbon 2023",
+              "code": "thinkpad_x1_carbon_2023",
+              "options": [
+                {
+                  "name": "Год выпуска",
+                  "value": 2023
+                },
+                {
+                  "name": "Цена",
+                  "value": 1499
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "IdeaPad 3",
+          "code": "ideapad_3",
+          "laptops": [
+            {
+              "name": "Lenovo IdeaPad 3 2021",
+              "code": "ideapad_3_2021",
+              "options": [
+                {
+                  "name": "Год выпуска",
+                  "value": 2021
+                },
+                {
+                  "name": "Цена",
+                  "value": 499
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ASUS",
+      "code": "asus",
+      "models": [
+        {
+          "name": "ZenBook 14",
+          "code": "zenbook_14",
+          "laptops": [
+            {
+              "name": "ASUS ZenBook 14 2022",
+              "code": "zenbook_14_2022",
+              "options": [
+                {
+                  "name": "Год выпуска",
+                  "value": 2022
+                },
+                {
+                  "name": "Цена",
+                  "value": 899
+                }
+              ]
+            },
+            {
+              "name": "ASUS ZenBook 14 2023",
+              "code": "zenbook_14_2023",
+              "options": [
+                {
+                  "name": "Год выпуска",
+                  "value": 2023
+                },
+                {
+                  "name": "Цена",
+                  "value": 1899
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "ROG Zephyrus G14",
+          "code": "rog_zephyrus_g14",
+          "laptops": [
+            {
+              "name": "ASUS ROG Zephyrus G14 2022",
+              "code": "rog_zephyrus_g14_2022",
+              "options": [
+                {
+                  "name": "Год выпуска",
+                  "value": 2022
+                },
+                {
+                  "name": "Цена",
+                  "value": 1499
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Acer",
+      "code": "acer",
+      "models": [
+        {
+          "name": "Swift 3",
+          "code": "swift_3",
+          "laptops": [
+            {
+              "name": "Acer Swift 3 2023",
+              "code": "swift_3_2023",
+              "options": [
+                {
+                  "name": "Год выпуска",
+                  "value": 2023
+                },
+                {
+                  "name": "Цена",
+                  "value": 749
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Predator Helios 300",
+          "code": "predator_helios_300",
+          "laptops": [
+            {
+              "name": "Acer Predator Helios 300 2023",
+              "code": "predator_helios_300_2023",
+              "options": [
+                {
+                  "name": "Год выпуска",
+                  "value": 2023
+                },
+                {
+                  "name": "Цена",
+                  "value": 1299
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Razer",
+      "code": "razer",
+      "models": [
+        {
+          "name": "Blade 15",
+          "code": "blade_15",
+          "laptops": [
+            {
+              "name": "Razer Blade 15 2023",
+              "code": "blade_15_2023",
+              "options": [
+                {
+                  "name": "Год выпуска",
+                  "value": 2023
+                },
+                {
+                  "name": "Цена",
+                  "value": 1799
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Microsoft",
+      "code": "microsoft",
+      "models": [
+        {
+          "name": "Surface Laptop 5",
+          "code": "surface_laptop_5",
+          "laptops": [
+            {
+              "name": "Microsoft Surface Laptop 5 2022",
+              "code": "surface_laptop_5_2022",
+              "options": [
+                {
+                  "name": "Год выпуска",
+                  "value": 2022
+                },
+                {
+                  "name": "Цена",
+                  "value": 999
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Surface Pro 9",
+          "code": "surface_pro_9",
+          "laptops": [
+            {
+              "name": "Microsoft Surface Pro 9 2022",
+              "code": "surface_pro_9_2022",
+              "options": [
+                {
+                  "name": "Год выпуска",
+                  "value": 2022
+                },
+                {
+                  "name": "Цена",
+                  "value": 1099
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "LG",
+      "code": "lg",
+      "models": [
+        {
+          "name": "Gram 16",
+          "code": "gram_16",
+          "laptops": [
+            {
+              "name": "LG Gram 16 2023",
+              "code": "gram_16_2023",
+              "options": [
+                {
+                  "name": "Год выпуска",
+                  "value": 2023
+                },
+                {
+                  "name": "Цена",
+                  "value": 1499
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Samsung",
+      "code": "samsung",
+      "models": [
+        {
+          "name": "Galaxy Book 2 Pro",
+          "code": "galaxy_book_2_pro",
+          "laptops": [
+            {
+              "name": "Samsung Galaxy Book 2 Pro 2022",
+              "code": "galaxy_book_2_pro_2022",
+              "options": [
+                {
+                  "name": "Год выпуска",
+                  "value": 2022
+                },
+                {
+                  "name": "Цена",
+                  "value": 1099
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
