@@ -52,22 +52,16 @@ class LapTopOptionTable extends DataManager
                     'title' => Loc::getMessage('TOP_OPTION_ENTITY_ID_FIELD'),
                 ]
             ),
-            new StringField(
+            new IntegerField(
                 'VALUE',
                 [
-                    'validation' => function()
-                    {
-                        return[
-                            new LengthValidator(null, 255),
-                        ];
-                    },
+                    'required' => true,
                     'title' => Loc::getMessage('TOP_OPTION_ENTITY_VALUE_FIELD'),
                 ]
             ),
             new IntegerField(
                 'LAPTOP_ID',
                 [
-                    'required' => true,
                     'title' => Loc::getMessage('TOP_OPTION_ENTITY_LAP_TOP_ID_FIELD'),
                 ]
             ),

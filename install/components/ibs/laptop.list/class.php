@@ -132,23 +132,30 @@ class ComponentCustomList extends CBitrixComponent
             unset($code);
             unset($value);
 
-
-
+            // запрос для пагинации из за дублей в выборке
             $rows = $entity::getList([
-                "select" => $select,
+                "select" => ['ID'],
                 "filter" => $this->arParams['FILTER'],
                 "order" => $sort['sort'],
                 "count_total" => true,
                 "offset" => $this->arResult['nav']->getOffset(),
                 "limit" => $this->arResult['nav']->getLimit(),
             ]);
-
             $this->arResult['nav']->setRecordCount($rows->getCount());
 
+            while($row = $rows->fetch()) {
+                $this->arParams['FILTER']['ID'][] = $row['ID'];
+            }
+
+
+            // второй запрос для свойств
+            $rows = $entity::getList([
+                "select" => $select,
+                "filter" => $this->arParams['FILTER'],
+                "order" => $sort['sort'],
+            ]);
 
             while($row = $rows->fetch()) {
-
-
                 $this->arResult['LIST'][$row['ID']]['id'] = 'id_'.$row['ID'];
                 $this->arResult['LIST'][$row['ID']]['actions'] = [
                     [
@@ -158,11 +165,8 @@ class ComponentCustomList extends CBitrixComponent
                     ]
                 ];
 
-
                 foreach ($row as $code => $field) {
-
                     if($code == 'OPTIONS_') {
-
                         $this->arResult['LIST'][$row['ID']]['data'][$row['OPTIONS_NAME']] = $row['OPTIONS_'];
                     }
 
