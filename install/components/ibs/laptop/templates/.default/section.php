@@ -3,9 +3,7 @@
  * @var $arResult
  * @var $APPLICATION
  */
-echo "<pre>";
-print_r('model');
-echo "</pre>";
+
 $GLOBALS['arFilter'] = [
     'BRAND.NAME' => $arResult['VARIABLES']['BRAND'],
 ];
@@ -17,9 +15,9 @@ $APPLICATION->IncludeComponent(
     array(
         "CACHE_TIME" => "3600",
         "FILTER_NAME" => "arFilter",
-        "CACHE_TYPE" => "A",
+        "CACHE_TYPE" => "N",
         "COMPONENT_TEMPLATE" => ".default",
-        "DETAIL_PAGE_URL" => $arParams['SEF_FOLDER'].$arResult['VARIABLES']['BRAND'].'/#code#/',
+        "DETAIL_PAGE_URL" => $arResult['DETAIL_PAGE_URL'],
         "GRID_ID" => "list_grid_id",
         "ENTITY" => "LaptopStore\Entity\ModelTable",
         "OPTIONS" => ['BRAND_' => 'BRAND.NAME']

@@ -52,8 +52,15 @@ class Ibs_laptop_store extends CModule {
         if ($request["step"] == 2) {
 
             ModuleManager::RegisterModule($this->MODULE_ID);
-            $this->InstallDB();
-            $this->addData();
+
+            // проверяим ответ формы
+            if ($request["add_data"] == "Y") {
+                $this->UnInstallDB();
+                $this->InstallDB();
+                $this->addData();
+            }
+
+
             $this->InstallEvents();
             $this->InstallFiles();
             $this->installAgents();
@@ -76,8 +83,7 @@ class Ibs_laptop_store extends CModule {
         }
 
         if ($request["step"] == 2) {
-            $this->UnInstallDB();
-            // проверяим ответ формы введеный пользователем на первом шаге
+            // проверяим ответ формы
             if ($request["save_data"] == "Y") {
                 $this->UnInstallDB();
             }
@@ -90,7 +96,25 @@ class Ibs_laptop_store extends CModule {
 
         return true;
     }
-
+    public function InstallFiles()
+    {
+        CopyDirFiles(
+            __DIR__ . "/components",
+            $_SERVER["DOCUMENT_ROOT"] . "/local/components",
+            true,
+            true
+        );
+        return true;
+    }
+    public function UnInstallFiles()
+    {
+        if (is_dir($_SERVER["DOCUMENT_ROOT"] . "/local/components/ibs")) {
+            DeleteDirFilesEx(
+                "/local/components/ibs"
+            );
+        }
+        return true;
+    }
     public function InstallDB()
     {
         Loader::includeModule($this->MODULE_ID);

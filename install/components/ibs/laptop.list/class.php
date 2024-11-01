@@ -9,15 +9,12 @@ use Bitrix\Main\Localization\Loc,
     Bitrix\Main\UI\PageNavigation,
     Bitrix\Iblock\PropertyEnumerationTable;
 
-class CIblocList extends CBitrixComponent
+class ComponentCustomList extends CBitrixComponent
 {
-    // выполняет основной код компонента, аналог конструктора (метод подключается автоматически)
     public function executeComponent()
     {
         try {
-            // подключаем метод проверки подключения модуля «Информационные блоки»
             $this->checkModules();
-            // подключаем метод подготовки массива $arResult
             $this->getResult();
         } catch (SystemException $e) {
             ShowError($e->getMessage());
@@ -43,15 +40,13 @@ class CIblocList extends CBitrixComponent
             $arParams['CACHE_TIME'] = intval($arParams['CACHE_TIME']);
         }
         $arParams['DEFAULT_OPTIONS'] = ['*'];
-//        todo
-//        $arParams['GRID_ID'] = $arParams['GRID_ID'];
-
 
         if (!empty($arParams["FILTER_NAME"]) && preg_match("/^[A-Za-z_][A-Za-z01-9_]*$/", $arParams["FILTER_NAME"])) {
 
             $arParams['FILTER'] = $GLOBALS[$arParams["FILTER_NAME"]] ?? [];
+            $arParams['FILTER']['ACTIVE'] = 'Y';
             if (!is_array($arParams['FILTER'])) {
-                $arParams['FILTER'] = [];
+                $arParams['FILTER'] = ['ACTIVE' => 'Y'];
             }
         }
         return $arParams;
@@ -60,9 +55,30 @@ class CIblocList extends CBitrixComponent
 
     protected function getResult()
     {
-        // если нет валидного кеша, получаем данные из БД
-        if ($this->startResultCache()) {
+        $this->arResult = [];
+        $this->arResult['gridId'] = $this->arParams['GRID_ID'];
+        $this->arResult['columns'] = [];
+        $this->arResult['pageSizes'] = [
+            ['NAME' => "5", 'VALUE' => '5'],
+            ['NAME' => '10', 'VALUE' => '10'],
+            ['NAME' => '20', 'VALUE' => '20'],
+        ];
+        $grid_options = new Options($this->arResult['gridId']);
+        $sort = $grid_options->GetSorting(['sort' => ['ID' => 'DESC'], 'vars' => ['by' => 'by', 'order' => 'order']]);
+        $nav_params = $grid_options->GetNavParams();
 
+        $this->arResult['nav'] = new PageNavigation('our_custom_grid_nav');
+        $this->arResult['nav']->allowAllRecords(false)
+            ->setPageSize($nav_params['nPageSize'])
+            ->setPageSizes($this->arResult['pageSizes'])
+            ->initFromUri();
+
+
+
+
+
+
+        if ($this->startResultCache(false, [$_REQUEST, $this->arParams, $grid_options, $sort, $nav_params, $this->arResult['pageSizes']])) {
 
 
             $entity = new $this->arParams['ENTITY'];
@@ -70,54 +86,56 @@ class CIblocList extends CBitrixComponent
             /**  TODO */
 
 
-
-            $this->arResult = [];
-            $this->arResult['gridId'] = $this->arParams['GRID_ID'];
-            $this->arResult['columns'] = [];
-            $this->arResult['pageSizes'] = [
-                ['NAME' => "5", 'VALUE' => '5'],
-                ['NAME' => '10', 'VALUE' => '10'],
-                ['NAME' => '20', 'VALUE' => '20'],
-            ];
-
+            $sortValid = [];
             foreach ($entity->getMap() as $field) {
-                $this->arResult['columns'][] = [
+                $temp = [
                     'id' => $field->getName(),
                     'name' => $field->getName(),
-                    'sort' => $field->getName(),
+                    'sort' => '',
                     'default' => true
                 ];
+                if($field->getName() == 'ID' || $field->getName() == 'NAME')
+                    $temp['sort'] = $field->getName();
+
+                $this->arResult['columns'][] = $temp;
+
+                if($temp['sort'])
+                    $sortValid[] = $temp['sort'];
+                unset($temp);
             }
+            unset($field);
+
+
             if($this->arParams['DOP_FIELDS']) {
                 $this->arResult['columns'] = array_merge($this->arResult['columns'], $this->arParams['DOP_FIELDS']);
             }
 
 
-            $grid_options = new Options($this->arResult['gridId']);
-            $sort = $grid_options->GetSorting(['sort' => ['ID' => 'DESC'], 'vars' => ['by' => 'by', 'order' => 'order']]);
-            $nav_params = $grid_options->GetNavParams();
+            foreach ($this->arParams['DOP_FIELDS'] as $FIELD) {
+                $sortValid[] = $FIELD['sort'];
+
+            }
+
+            $select = array_merge($this->arParams['DEFAULT_OPTIONS'], $this->arParams['OPTIONS']);
 
 
 
 
+            if ($sort['sort']) {
+                foreach ($sort['sort'] as $code => $value) {
+                    if(!in_array($code, $sortValid)) {
+                        unset($sort['sort'][$code]);
+                    }
+                }
 
-            $this->arResult['nav'] = new PageNavigation('our_custom_grid_nav');
-            $this->arResult['nav']->allowAllRecords(false)
-                ->setPageSize($nav_params['nPageSize'])
-                ->setPageSizes($this->arResult['pageSizes'])
-                ->initFromUri();
+            }
+            unset($code);
+            unset($value);
 
-//            $rows = $entity::query()
-//                ->setSelect(array_merge($this->arParams['DEFAULT_OPTIONS'], $this->arParams['OPTIONS']))
-//                ->setOffset($this->arResult['nav']->getOffset())
-//                ->setLimit($this->arResult['nav']->getLimit())
-//                ->setFilter($this->arParams['FILTER'])
-//                ->setOrder($sort['sort'])
-//                ->exec();
-//
+
 
             $rows = $entity::getList([
-                "select" => array_merge($this->arParams['DEFAULT_OPTIONS'], $this->arParams['OPTIONS']),
+                "select" => $select,
                 "filter" => $this->arParams['FILTER'],
                 "order" => $sort['sort'],
                 "count_total" => true,
@@ -127,54 +145,6 @@ class CIblocList extends CBitrixComponent
 
             $this->arResult['nav']->setRecordCount($rows->getCount());
 
-            /*
-            $collections = $rows->fetchCollection();
-            foreach ($collections as $collection) {
-                $temp = [];
-                $DetailUrl = str_replace('#code#', $collection->get('CODE'), $this->arParams['DETAIL_PAGE_URL']);
-                $temp['id'] = 'id_'.$collection->get('ID');
-                $temp['actions'] = [
-                    [
-                        'text'    => 'Просмотр',
-                        'default' => true,
-                        'onclick' => 'document.location.href="'.$DetailUrl.'"'
-                    ]
-                ];
-                $temp['data'] = [];
-
-                foreach ($entity->getMap() as $field) {
-
-
-
-                    if($field->getName() == 'NAME') {
-                        $temp['data']['NAME'] = '<a href="'.$DetailUrl.'">'.$collection->get('CODE').'</a>';
-                    }
-                    elseif(is_object($collection->get($field->getName())) && $field->getName() != 'OPTIONS') {
-                        $temp['data'][$field->getName()] = $collection->get($field->getName())->getName();
-                    }
-                    elseif($field->getName() == 'OPTIONS') {
-
-                        echo "<pre>";
-                        print_r($collection->get('OPTIONS')->getOption()->getName());
-                        echo "</pre>";
-
-                        echo "<pre>";
-                        print_r($collection->get('OPTIONS')->getValue());
-                        echo "</pre>";
-
-
-
-
-                    }else {
-                        $temp['data'][$field->getName()] = $collection->get($field->getName());
-                    }
-
-                }
-
-
-                $this->arResult['LIST'][] = $temp;
-            }
-            */
 
             while($row = $rows->fetch()) {
 
@@ -188,9 +158,10 @@ class CIblocList extends CBitrixComponent
                     ]
                 ];
 
-                foreach ($row as $code => $field) {
-                    if($code == 'OPTIONS_') {
 
+                foreach ($row as $code => $field) {
+
+                    if($code == 'OPTIONS_') {
 
                         $this->arResult['LIST'][$row['ID']]['data'][$row['OPTIONS_NAME']] = $row['OPTIONS_'];
                     }
@@ -199,15 +170,15 @@ class CIblocList extends CBitrixComponent
                     if($code == 'NAME') {
                         $this->arResult['LIST'][$row['ID']]['data']['NAME'] = '<a href="'.$DetailUrl.'">'.$row['NAME'].'</a>';
                     }else{
-                        $this->arResult['LIST'][$row['ID']]['data'][$code] = $row[$code];
+                        // удаляем нижнее подчёркивание для алиасов
+                        $this->arResult['LIST'][$row['ID']]['data'][rtrim($code, '_')] = $field;
                     }
                 }
 
             }
 
-            // кэш не затронет весь код ниже, он будут выполняться на каждом хите, здесь работаем с другим $arResult, будут доступны только те ключи массива, которые перечислены в вызове SetResultCacheKeys()
+
             if (!empty($this->arResult)) {
-                // ключи $arResult перечисленные при вызове этого метода, будут доступны в component_epilog.php и ниже по коду, обратите внимание там будет другой $arResult
                 $this->SetResultCacheKeys(
                     array()
                 );
@@ -215,7 +186,7 @@ class CIblocList extends CBitrixComponent
             } else {
                 $this->AbortResultCache();
                 \Bitrix\Iblock\Component\Tools::process404(
-                    "Секция не найдена",
+                    "not found",
                     true,
                     true
                 );
