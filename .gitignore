@@ -1,0 +1,26 @@
+# Система контроля версий
+*.orig
+*.lock
+*.log
+
+# Игнорируем файлы IDE
+/.idea/
+/*.iml
+.vscode/
+
+# PHP
+/vendor/
+/node_modules/
+/composer.lock
+/.phpunit.result.cache
+
+# Логи и временные файлы
+*.log
+*.tmp
+*.cache
+
+# Конфиденциальные файлы
+.env
+*.env.local
+*.env.*.local
+
