@@ -15,7 +15,7 @@ $APPLICATION->IncludeComponent(
         'NAV_OBJECT' => $arResult['nav'],
         'PAGE_SIZES' => $arResult['pageSizes'],
 
-        "AJAX_MODE" => "N",
+        "AJAX_MODE" => "Y",
         'AJAX_ID'   => \CAjax::getComponentID('bitrix:main.ui.grid', '.default', ''),
         'AJAX_OPTION_JUMP'          => 'N',
         'AJAX_OPTION_HISTORY'       => 'N' ,
