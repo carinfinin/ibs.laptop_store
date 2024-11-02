@@ -7,7 +7,7 @@ $arComponentDescription = array(
     "NAME" => Loc::GetMessage("L_L_NAME"),
     "DESCRIPTION" => Loc::GetMessage("L_L_DESCRIPTION"),
     "ICON" => "/images/news_all.gif",
-    "COMPLEX" => "Y",
+    "COMPLEX" => "N",
     "PATH" => array(
         "ID" => "ibs",
     ),
